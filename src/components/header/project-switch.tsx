@@ -27,6 +27,7 @@ import Project from '@/lib/api/type/schema/project';
 import { useModalStore } from '@/lib/store/modal';
 import { useUserStore } from '@/lib/store/user';
 
+import { InviteProjectProps } from '@/modals/project/invite';
 import { ProjectInvitedProps } from '@/modals/project/invited';
 import { NewProjectProps } from '@/modals/project/new';
 import { ChevronsUpDown, Plus } from 'lucide-react';
@@ -49,7 +50,7 @@ export default function ProjectSwitch() {
   const formatParticipantString = useCallback(
     (project: Project, pending: boolean = true) =>
       `${project.participants.length}명 참가중` +
-      (pending && project.pending.length > 0 ? `(대기: ${project.pending.length}명)` : ''),
+      (pending && project.pending.length > 0 ? ` (대기: ${project.pending.length}명)` : ''),
     [],
   );
 
@@ -179,6 +180,16 @@ export default function ProjectSwitch() {
                   onCreate: (project: Project) => {
                     setProjects((prev) => [...prev, project]);
                     setSelectedProjectId(project.id);
+                    setTimeout(() => {
+                      open<InviteProjectProps>('project:invite', {
+                        project: project,
+                        onUpdate: (project: Project) => {
+                          setProjects((prev) =>
+                            prev.map((p) => (p.id === project.id ? project : p)),
+                          );
+                        },
+                      });
+                    }, 100);
                   },
                 })
               }

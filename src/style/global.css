@@ -115,11 +115,24 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-    font-family: Pretendard, sans-serif;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border outline-ring/50;
+        font-family: Pretendard, sans-serif;
+    }
+
+    *::-webkit-scrollbar {
+         width: 10px;
+     }
+
+    *::-webkit-scrollbar-thumb {
+        width: 10px;
+        background-color: rgb(0 0 0 / 20%);
+        border: 2px solid transparent;
+        border-radius: 10px;
+        background-clip: content-box;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
 }

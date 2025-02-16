@@ -1,6 +1,7 @@
 import Request from '@/lib/api/request';
 import {
   CreateProjectRequest,
+  InviteProjectRequest,
   ProjectResponse,
   ProjectsResponse,
 } from '@/lib/api/type/domain/project';
@@ -20,8 +21,11 @@ export default class Project {
     return this.request.post('/project', data);
   }
 
-  public async inviteProject(projectId: string, userId: string): Promise<ProjectResponse> {
-    return this.request.post(`/project/${projectId}/invite/${userId}`);
+  public async inviteProject(
+    projectId: string,
+    data: InviteProjectRequest,
+  ): Promise<ProjectResponse> {
+    return this.request.post(`/project/${projectId}/invite`, data);
   }
 
   public async acceptInvite(projectId: string): Promise<ProjectResponse> {

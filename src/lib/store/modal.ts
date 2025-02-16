@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Modal = 'setting:theme' | 'project:invited' | 'project:new';
+type Modal = 'setting:theme' | 'project:invited' | 'project:new' | 'project:invite';
 
 interface Type<T = unknown> {
   modal: Modal | null;
