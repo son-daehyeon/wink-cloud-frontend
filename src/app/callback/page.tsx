@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import Loader from '@/components/loader';
-
 import { useApiWithToast } from '@/hooks/use-api';
 
 import Api from '@/lib/api';
@@ -20,23 +18,26 @@ export default function Page() {
   const [, startApi] = useApiWithToast();
 
   useEffect(() => {
-    if (!searchParams.has('token')) {
-      router.replace('/');
-      return;
-    }
+    router.replace('/');
+
+    if (!searchParams.has('token')) return;
 
     startApi(
       async () => {
         const response = await Api.Domain.Auth.login({ token: searchParams.get('token')! });
-        await login(response);
+        await new Promise<void>((res) =>
+          setTimeout(async () => {
+            await login(response);
+            res();
+          }, 1000),
+        );
       },
       {
         loading: '로그인 처리 중...',
         success: '로그인 성공!',
-        finally: () => router.replace('/'),
       },
     );
   }, []);
 
-  return <Loader />;
+  return null;
 }
