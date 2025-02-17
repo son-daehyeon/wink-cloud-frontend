@@ -1,12 +1,14 @@
+import Project from '@/lib/api/type/schema/project';
+
 import { create } from 'zustand/index';
 import { persist } from 'zustand/middleware';
 
 interface Type {
-  project: string | null;
+  project: Project | null;
 }
 
 interface Action {
-  setProject: (project: string) => void;
+  setProject: (project: Project) => void;
 }
 
 const initialState: Type = {
@@ -17,7 +19,7 @@ export const useProjectStore = create(
   persist<Type & Action>(
     (set) => ({
       ...initialState,
-      setProject: (project: string) => set({ project }),
+      setProject: (project: Project) => set({ project }),
     }),
     {
       name: 'project',

@@ -26,6 +26,7 @@ import ThemeProvider from '@/components/theme-provider';
 
 import { useApi } from '@/hooks/use-api';
 
+import { useProjectStore } from '@/lib/store/project';
 import { useTokenStore } from '@/lib/store/token';
 
 import '@/style/global.css';
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const searchParams = useSearchParams();
 
   const { initialize } = useTokenStore();
+  const { project } = useProjectStore();
 
   const [isApi, startApi] = useApi();
 
@@ -103,7 +105,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <SidebarInset>
               <NavBreadcrumb />
               <main className="min-h-[calc(100dvh-56px)] overflow-y-auto p-4 pt-0 md:p-6 md:pt-0">
-                {isApi ? <Loader /> : children}
+                {isApi || !project ? <Loader /> : children}
               </main>
             </SidebarInset>
           </SidebarProvider>

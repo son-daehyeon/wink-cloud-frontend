@@ -5,7 +5,6 @@ import { ComponentType, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import { useModalStore } from '@/lib/store/modal';
 
@@ -26,7 +25,7 @@ export default function ModalManager() {
             <DialogHeader>
               <DialogTitle>불러오는 중...</DialogTitle>
             </DialogHeader>
-            <Skeleton className="w-full h-32" />
+            <div className="h-20" />
           </>
         ),
         ssr: false,

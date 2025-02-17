@@ -63,10 +63,23 @@ export default function ProjectSwitch() {
       setProjects(projects);
       setInvitedProjects(invitedProjects);
 
-      if (!currentProject || !projects.find((project) => project.id === currentProject))
-        setCurrentProject(projects[0].id);
+      if (!currentProject || !projects.find((project) => project.id === currentProject.id)) {
+        setCurrentProject(projects[0]);
+      } else {
+        setCurrentProject(projects.find((project) => project.id === currentProject.id)!);
+      }
     });
   }, [user]);
+
+  useEffect(() => {
+    (async () => {
+      const { projects } = await Api.Domain.Project.Index.myProjects();
+      setProjects(projects);
+      if (!currentProject || !projects.find((project) => project.id === currentProject.id)) {
+        setCurrentProject(projects[0]);
+      }
+    })();
+  }, [currentProject]);
 
   if (isApi || !currentProject) return <ProjectSwitchSkeleton />;
 
@@ -80,7 +93,7 @@ export default function ProjectSwitch() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               {projects
-                .filter((project) => project.id === currentProject)
+                .filter((project) => project.id === currentProject.id)
                 .map((project) => (
                   <Fragment key={project.id}>
                     <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
@@ -114,7 +127,7 @@ export default function ProjectSwitch() {
             {projects.map((project) => (
               <DropdownMenuItem
                 key={project.id}
-                onClick={() => setCurrentProject(project.id)}
+                onClick={() => setCurrentProject(project)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
@@ -146,7 +159,7 @@ export default function ProjectSwitch() {
                     onAccept: (project: Project) => {
                       setInvitedProjects((prev) => prev.filter((p) => p.id !== project.id));
                       setProjects((prev) => [...prev, project]);
-                      setCurrentProject(project.id);
+                      setCurrentProject(project);
                     },
                     onDecline: (project: Project) => {
                       setInvitedProjects((prev) => prev.filter((p) => p.id !== project.id));
@@ -178,7 +191,7 @@ export default function ProjectSwitch() {
                 open<NewProjectProps>('project:new', {
                   onCreate: (project: Project) => {
                     setProjects((prev) => [...prev, project]);
-                    setCurrentProject(project.id);
+                    setCurrentProject(project);
                     setTimeout(() => {
                       open<InviteProjectProps>('project:invite', {
                         project: project,

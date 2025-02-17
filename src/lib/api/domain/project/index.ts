@@ -36,6 +36,10 @@ export default class Project {
     return this.request.post(`/project/${projectId}/invite/decline`);
   }
 
+  public async deleteInvite(projectId: string, userId: string): Promise<ProjectResponse> {
+    return this.request.delete(`/project/${projectId}/invite/${userId}`);
+  }
+
   public async updateProject(
     projectId: string,
     data: CreateProjectRequest,
@@ -45,5 +49,9 @@ export default class Project {
 
   public async deleteProject(projectId: string): Promise<void> {
     return this.request.delete(`/project/${projectId}`);
+  }
+
+  public async deleteMember(projectId: string, userId: string): Promise<ProjectResponse> {
+    return this.request.delete(`/project/${projectId}/member/${userId}`);
   }
 }

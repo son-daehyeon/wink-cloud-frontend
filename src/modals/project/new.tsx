@@ -127,7 +127,7 @@ interface IconSelectorProps {
 }
 
 export function IconSelector({ onSelect }: IconSelectorProps) {
-  const [query, setQuery] = useState<string>();
+  const [query, setQuery] = useState('');
   const [displayCount, setDisplayCount] = useState(50);
   const observerRef = useRef<HTMLDivElement>(null);
 

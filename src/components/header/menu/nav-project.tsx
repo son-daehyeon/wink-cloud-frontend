@@ -10,29 +10,12 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-import { Archive, Settings2, TerminalSquare, Users } from 'lucide-react';
+import { Archive, Settings2, TerminalSquare } from 'lucide-react';
 
 const items = [
-  {
-    title: '인스턴스',
-    icon: TerminalSquare,
-    url: '/instance',
-  },
-  {
-    title: '스토리지',
-    url: '/storage',
-    icon: Archive,
-  },
-  {
-    title: '팀원 관리',
-    icon: Users,
-    onClick: () => {},
-  },
-  {
-    title: '일반 설정',
-    icon: Settings2,
-    onClick: () => {},
-  },
+  { title: '인스턴스', icon: TerminalSquare, url: '/instance' },
+  { title: '스토리지', icon: Archive, url: '/storage' },
+  { title: '설정', icon: Settings2, url: '/setting' },
 ];
 
 export default function NavProject() {
@@ -44,14 +27,7 @@ export default function NavProject() {
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton
-              onClick={
-                item?.onClick ||
-                (() => {
-                  router.push(item?.url);
-                })
-              }
-            >
+            <SidebarMenuButton onClick={() => router.push(item.url)}>
               <item.icon />
               <span>{item.title}</span>
             </SidebarMenuButton>

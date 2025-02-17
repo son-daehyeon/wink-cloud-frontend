@@ -21,7 +21,6 @@ import Api from '@/lib/api';
 import Project from '@/lib/api/type/schema/project';
 import User from '@/lib/api/type/schema/user';
 import { useModalStore } from '@/lib/store/modal';
-import { useUserStore } from '@/lib/store/user';
 import { cn } from '@/lib/utils';
 
 import { Check, ChevronsUpDown } from 'lucide-react';
@@ -36,7 +35,6 @@ export default function InviteProjectModal({ project, onUpdate }: InviteProjectP
   const [isApi, startApi] = useApi();
   const [isApi2, startApi2] = useApiWithToast();
 
-  const { user } = useUserStore();
   const { close } = useModalStore();
 
   const [users, setUsers] = useState<User[]>([]);
@@ -45,6 +43,11 @@ export default function InviteProjectModal({ project, onUpdate }: InviteProjectP
   const [open, setOpen] = useState(false);
 
   const invite = useCallback((project: Project, users: string[]) => {
+    if (users.length === 0) {
+      close();
+      return;
+    }
+
     startApi2(
       async () => {
         const { project: _project } = await Api.Domain.Project.Index.inviteProject(project.id, {
@@ -105,7 +108,8 @@ export default function InviteProjectModal({ project, onUpdate }: InviteProjectP
                 <CommandEmpty>유저를 찾을 수 없습니다.</CommandEmpty>
                 <CommandGroup>
                   {users
-                    .filter((u) => u.id !== user!.id)
+                    .filter((u) => !project.participants.find((uu) => uu.id === u.id))
+                    .filter((u) => !project.pending.find((uu) => uu.id === u.id))
                     .map((user) => (
                       <CommandItem
                         key={user.id}
