@@ -95,7 +95,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <SidebarRail />
             </Sidebar>
             <SidebarInset>
-              <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+              <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 bg-background/50 backdrop-blur">
                 <div className="flex items-center gap-2 px-4">
                   <SidebarTrigger className="-ml-1" />
                   <Separator
@@ -115,7 +115,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </Breadcrumb>
                 </div>
               </header>
-              <main className="min-h-[calc(100dvh-64px)]">{isApi ? <Loader /> : children}</main>
+              <main className="min-h-[calc(100dvh-56px)] overflow-y-auto px-4 pt-2 pb-4 sm:px-8 sm:pt-4 sm:pb-6">
+                {isApi ? <Loader /> : children}
+              </main>
             </SidebarInset>
           </SidebarProvider>
 
