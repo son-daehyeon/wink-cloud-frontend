@@ -10,10 +10,8 @@ const BreadcrumbPath: Record<string, BreadcrumbNode> = {
     href: '/',
     children: {
       callback: { label: '로그인', href: 'callback' },
-      application: {
-        label: '애플리케이션',
-        href: '/application',
-      },
+      instance: { label: '인스턴스', href: '/instance' },
+      storage: { label: '스토리지', href: '/storage' },
     },
   },
 };

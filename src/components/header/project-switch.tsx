@@ -25,6 +25,7 @@ import { useApi } from '@/hooks/use-api';
 import Api from '@/lib/api';
 import Project from '@/lib/api/type/schema/project';
 import { useModalStore } from '@/lib/store/modal';
+import { useProjectStore } from '@/lib/store/project';
 import { useUserStore } from '@/lib/store/user';
 
 import { InviteProjectProps } from '@/modals/project/invite';
@@ -32,20 +33,18 @@ import { ProjectInvitedProps } from '@/modals/project/invited';
 import { NewProjectProps } from '@/modals/project/new';
 import { ChevronsUpDown, Plus } from 'lucide-react';
 import { DynamicIcon, IconName, iconNames } from 'lucide-react/dynamic';
-import { useQueryState } from 'nuqs';
 
 export default function ProjectSwitch() {
   const { isMobile } = useSidebar();
 
   const { user } = useUserStore();
   const { open } = useModalStore();
+  const { project: currentProject, setProject: setCurrentProject } = useProjectStore();
 
   const [isApi, startApi] = useApi();
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [invitedProjects, setInvitedProjects] = useState<Project[]>([]);
-
-  const [selectedProjectId, setSelectedProjectId] = useQueryState('project');
 
   const formatParticipantString = useCallback(
     (project: Project, pending: boolean = true) =>
@@ -64,12 +63,12 @@ export default function ProjectSwitch() {
       setProjects(projects);
       setInvitedProjects(invitedProjects);
 
-      if (!selectedProjectId || !projects.find((project) => project.id === selectedProjectId))
-        await setSelectedProjectId(projects[0].id);
+      if (!currentProject || !projects.find((project) => project.id === currentProject))
+        setCurrentProject(projects[0].id);
     });
   }, [user]);
 
-  if (isApi || !selectedProjectId) return <ProjectSwitchSkeleton />;
+  if (isApi || !currentProject) return <ProjectSwitchSkeleton />;
 
   return (
     <SidebarMenu>
@@ -81,7 +80,7 @@ export default function ProjectSwitch() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               {projects
-                .filter((project) => project.id === selectedProjectId)
+                .filter((project) => project.id === currentProject)
                 .map((project) => (
                   <Fragment key={project.id}>
                     <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
@@ -115,7 +114,7 @@ export default function ProjectSwitch() {
             {projects.map((project) => (
               <DropdownMenuItem
                 key={project.id}
-                onClick={() => setSelectedProjectId(project.id)}
+                onClick={() => setCurrentProject(project.id)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
@@ -147,7 +146,7 @@ export default function ProjectSwitch() {
                     onAccept: (project: Project) => {
                       setInvitedProjects((prev) => prev.filter((p) => p.id !== project.id));
                       setProjects((prev) => [...prev, project]);
-                      setSelectedProjectId(project.id);
+                      setCurrentProject(project.id);
                     },
                     onDecline: (project: Project) => {
                       setInvitedProjects((prev) => prev.filter((p) => p.id !== project.id));
@@ -179,7 +178,7 @@ export default function ProjectSwitch() {
                 open<NewProjectProps>('project:new', {
                   onCreate: (project: Project) => {
                     setProjects((prev) => [...prev, project]);
-                    setSelectedProjectId(project.id);
+                    setCurrentProject(project.id);
                     setTimeout(() => {
                       open<InviteProjectProps>('project:invite', {
                         project: project,

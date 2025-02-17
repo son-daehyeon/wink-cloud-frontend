@@ -15,9 +15,9 @@ import {
 } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
+import NavOther from '@/components/header/menu/nav-other';
+import NavProject from '@/components/header/menu/nav-project';
 import NavBreadcrumb from '@/components/header/nav-breadcrumb';
-import NavMain from '@/components/header/nav-main';
-import NavOther from '@/components/header/nav-other';
 import NavUser from '@/components/header/nav-user';
 import ProjectSwitch from '@/components/header/project-switch';
 import Loader from '@/components/loader';
@@ -29,8 +29,6 @@ import { useApi } from '@/hooks/use-api';
 import { useTokenStore } from '@/lib/store/token';
 
 import '@/style/global.css';
-
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -82,39 +80,37 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body>
-        <NuqsAdapter>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
-              <Sidebar>
-                <SidebarHeader>
-                  <ProjectSwitch />
-                </SidebarHeader>
-                <SidebarContent>
-                  <NavMain />
-                  <NavOther />
-                </SidebarContent>
-                <SidebarFooter>
-                  <NavUser />
-                </SidebarFooter>
-                <SidebarRail />
-              </Sidebar>
-              <SidebarInset>
-                <NavBreadcrumb />
-                <main className="min-h-[calc(100dvh-56px)] overflow-y-auto px-4 pt-2 pb-4 md:px-8 md:pt-4 md:pb-6">
-                  {isApi ? <Loader /> : children}
-                </main>
-              </SidebarInset>
-            </SidebarProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarProvider>
+            <Sidebar>
+              <SidebarHeader>
+                <ProjectSwitch />
+              </SidebarHeader>
+              <SidebarContent>
+                <NavProject />
+                <NavOther />
+              </SidebarContent>
+              <SidebarFooter>
+                <NavUser />
+              </SidebarFooter>
+              <SidebarRail />
+            </Sidebar>
+            <SidebarInset>
+              <NavBreadcrumb />
+              <main className="min-h-[calc(100dvh-56px)] overflow-y-auto p-4 pt-0 md:p-6 md:pt-0">
+                {isApi ? <Loader /> : children}
+              </main>
+            </SidebarInset>
+          </SidebarProvider>
 
-            <ModalManager />
-            <Toaster richColors closeButton />
-          </ThemeProvider>
-        </NuqsAdapter>
+          <ModalManager />
+          <Toaster richColors closeButton />
+        </ThemeProvider>
       </body>
     </html>
   );

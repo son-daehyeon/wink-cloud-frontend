@@ -25,16 +25,11 @@ export default function Page() {
     startApi(
       async () => {
         const response = await Api.Domain.Auth.login({ token: searchParams.get('token')! });
-        await new Promise<void>((res) =>
-          setTimeout(async () => {
-            await login(response);
-            res();
-          }, 1000),
-        );
+        await login(response);
       },
       {
-        loading: '로그인 처리 중...',
-        success: '로그인 성공!',
+        loading: '로그인하고 있습니다.',
+        success: '로그인 성공',
       },
     );
   }, []);

@@ -12,24 +12,22 @@ import { useModalStore } from '@/lib/store/modal';
 
 import { Palette } from 'lucide-react';
 
-const projects = [
+const items = [
   {
     name: '테마 설정',
     icon: Palette,
-    onClick: () => {},
+    onClick: () => useModalStore.getState().open('setting:theme'),
   },
 ];
 
 export default function NavOther() {
-  const { open } = useModalStore();
-
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>기타</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => (
+        {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton onClick={() => open('setting:theme')}>
+            <SidebarMenuButton onClick={item.onClick}>
               <item.icon />
               {item.name}
             </SidebarMenuButton>
