@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import Loader from '@/components/loader';
+
 import { useApiWithToast } from '@/hooks/use-api';
 
 import Api from '@/lib/api';
@@ -36,5 +38,5 @@ export default function Page() {
     );
   }, []);
 
-  return null;
+  return <Loader />;
 }

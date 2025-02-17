@@ -18,17 +18,27 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 
-import { ChevronsUpDown, Plus } from 'lucide-react';
+import { AudioWaveform, ChevronsUpDown, Command, GalleryVerticalEnd, Plus } from 'lucide-react';
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+const teams = [
+  {
+    name: 'Acme Inc',
+    logo: GalleryVerticalEnd,
+    plan: 'Enterprise',
+  },
+  {
+    name: 'Acme Corp.',
+    logo: AudioWaveform,
+    plan: 'Startup',
+  },
+  {
+    name: 'Evil Corp.',
+    logo: Command,
+    plan: 'Free',
+  },
+];
+
+export default function TeamSwitcher() {
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 

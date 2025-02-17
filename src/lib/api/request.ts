@@ -61,7 +61,7 @@ export default class Request {
       await fetch(`${this.baseUrl}/api${url}`, options)
     ).json();
 
-    if (response.error === '엑세스 토큰이 만료되었습니다.') {
+    if (response.error === '액세스 토큰이 만료되었습니다.') {
       const token = this.refreshToken!;
 
       this.removeToken();

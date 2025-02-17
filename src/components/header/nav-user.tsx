@@ -1,12 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -20,18 +17,16 @@ import {
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 
+import { useTokenStore } from '@/lib/store/token';
 import { useUserStore } from '@/lib/store/user';
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
+import { ChevronsUpDown, LogOut } from 'lucide-react';
 
-export function NavUser() {
+export default function NavUser() {
   const { isMobile } = useSidebar();
 
   const { user } = useUserStore();
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const { logout } = useTokenStore();
 
   if (!user) return <NavUserSkeleton />;
 
@@ -74,31 +69,9 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
-              Log out
+              로그아웃
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

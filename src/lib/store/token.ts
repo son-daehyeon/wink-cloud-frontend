@@ -15,7 +15,7 @@ interface Action {
   initialize: () => Promise<boolean>;
 }
 
-const initialData: Type = {
+const initialState: Type = {
   accessToken: null,
   refreshToken: null,
 };
@@ -23,14 +23,17 @@ const initialData: Type = {
 export const useTokenStore = create(
   persist<Type & Action>(
     (set, get) => ({
-      ...initialData,
+      ...initialState,
       login: ({ accessToken, refreshToken }: LoginResponse) => {
         set({ accessToken, refreshToken });
         return get().initialize();
       },
       logout: () => {
-        set({ ...initialData });
+        set({ ...initialState });
         Api.Request.removeToken();
+        window.location.replace(
+          `${process.env.NEXT_PUBLIC_WINK_HOSTNAME}/application/${process.env.NEXT_PUBLIC_WINK_APPLICATION_ID}/oauth?callback=${encodeURIComponent(process.env.NEXT_PUBLIC_WINK_CALLBACK_URL!)}`,
+        );
       },
       initialize: async () => {
         const { accessToken, refreshToken } = get();

@@ -10,9 +10,11 @@ interface Action {
   setUser: (user: User | null) => void;
 }
 
-type UserStore = Type & Action;
-
-export const useUserStore = create<UserStore>((set) => ({
+const initialState: Type = {
   user: null,
+};
+
+export const useUserStore = create<Type & Action>((set) => ({
+  ...initialState,
   setUser: (user) => set({ user }),
 }));
