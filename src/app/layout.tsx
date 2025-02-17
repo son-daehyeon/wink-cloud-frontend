@@ -59,22 +59,28 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="ko" suppressHydrationWarning>
-    <head>
-      <title>WINK 클라우드</title>
-      <meta name="description" content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK 전용 클라우드 서비스" />
-      <meta name="keywords" content="국민대학교, WINK, 웹 개발, 웹 동아리, 국민대 웹 동아리, WINK 클라우드" />
-      <meta name="author" content="WINK - Web IN Kookmin" />
-      <meta name="robots" content="index,nofollow" />
+      <head>
+        <title>WINK 클라우드</title>
+        <meta
+          name="description"
+          content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK 전용 클라우드 서비스"
+        />
+        <meta
+          name="keywords"
+          content="국민대학교, WINK, 웹 개발, 웹 동아리, 국민대 웹 동아리, WINK 클라우드"
+        />
+        <meta name="author" content="WINK - Web IN Kookmin" />
+        <meta name="robots" content="index,nofollow" />
 
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta charSet="utf-8" />
-      <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="utf-8" />
+        <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
 
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-      />
-    </head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+        />
+      </head>
       <body>
         <NuqsAdapter>
           <ThemeProvider

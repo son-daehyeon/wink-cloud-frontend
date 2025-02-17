@@ -69,7 +69,7 @@ export default function ProjectSwitch() {
     });
   }, [user]);
 
-  if (isApi) return <ProjectSwitchSkeleton />;
+  if (isApi || !selectedProjectId) return <ProjectSwitchSkeleton />;
 
   return (
     <SidebarMenu>
