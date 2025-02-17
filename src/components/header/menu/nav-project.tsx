@@ -10,11 +10,10 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-import { Archive, Settings2, TerminalSquare } from 'lucide-react';
+import { Settings2, TerminalSquare } from 'lucide-react';
 
 const items = [
   { title: '인스턴스', icon: TerminalSquare, url: '/instance' },
-  { title: '스토리지', icon: Archive, url: '/storage' },
   { title: '설정', icon: Settings2, url: '/setting' },
 ];
 
