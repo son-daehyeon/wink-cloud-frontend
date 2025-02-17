@@ -1,13 +1,8 @@
 'use client';
 
-import * as React from 'react';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
-import { NavMain } from '@/components/layout/nav-main';
-import { NavProjects } from '@/components/layout/nav-projects';
-import { NavUser } from '@/components/layout/nav-user';
-import { TeamSwitcher } from '@/components/layout/team-switcher';
-import ThemeProvider from '@/components/layout/theme-provider';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import {
   Breadcrumb,
@@ -30,7 +25,19 @@ import {
 } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
-import './globals.css';
+import { NavMain } from '@/components/header/nav-main';
+import { NavProjects } from '@/components/header/nav-projects';
+import { NavUser } from '@/components/header/nav-user';
+import { TeamSwitcher } from '@/components/header/team-switcher';
+import Loader from '@/components/loader';
+import ThemeProvider from '@/components/theme-provider';
+
+import { useApi } from '@/hooks/use-api';
+
+import { useSplashStore } from '@/lib/store/splash';
+import { useTokenStore } from '@/lib/store/token';
+
+import '@/style/global.css';
 
 import __data__ from '@/__data__';
 
@@ -38,6 +45,32 @@ interface RootLayoutProps {
   children: ReactNode;
 }
 export default function RootLayout({ children }: RootLayoutProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const { initialize } = useTokenStore();
+  const { first, started } = useSplashStore();
+
+  const [isApi, startApi] = useApi();
+
+  useEffect(() => {
+    if (searchParams.has('token')) return;
+
+    startApi(async () => {
+      if (first) {
+        await new Promise((res) => setTimeout(res, 2000));
+        started();
+      }
+
+      const isInitialized = await initialize();
+
+      if (!isInitialized)
+        router.replace(
+          'https://wink.daehyeon.cloud/application/67a9d0432d63d92ea91e05bd/oauth?callback=http://localhost:3000/callback',
+        );
+    });
+  }, [first, searchParams.get('token')]);
+
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
@@ -57,7 +90,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <NavProjects projects={__data__.projects} />
               </SidebarContent>
               <SidebarFooter>
-                <NavUser user={__data__.user} />
+                <NavUser />
               </SidebarFooter>
               <SidebarRail />
             </Sidebar>
@@ -82,7 +115,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </Breadcrumb>
                 </div>
               </header>
-              {children}
+              <main className="min-h-[calc(100dvh-64px)]">{isApi ? <Loader /> : children}</main>
             </SidebarInset>
           </SidebarProvider>
 

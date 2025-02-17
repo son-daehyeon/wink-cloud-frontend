@@ -13,12 +13,9 @@ export default class Request {
     this.baseUrl = typeof window === 'undefined' ? process.env.API_URL : window.origin;
   }
 
-  public async setToken(accessToken: string, refreshToken: string) {
+  public async setToken(accessToken: string, refreshToken: string): Promise<boolean> {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
-
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
 
     const response = await this.get<UserResponse>('/auth/me');
 
@@ -26,15 +23,15 @@ export default class Request {
       this.removeToken();
     } else {
       useUserStore.getState().setUser(response.user);
+      return true;
     }
+
+    return false;
   }
 
   public removeToken() {
     this.accessToken = null;
     this.refreshToken = null;
-
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
 
     useUserStore.getState().setUser(null);
   }
