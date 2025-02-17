@@ -28,7 +28,6 @@ import { useModalStore } from '@/lib/store/modal';
 import { useProjectStore } from '@/lib/store/project';
 import { useUserStore } from '@/lib/store/user';
 
-import { InviteProjectProps } from '@/modals/project/invite';
 import { ProjectInvitedProps } from '@/modals/project/invited';
 import { NewProjectProps } from '@/modals/project/new';
 import { ChevronsUpDown, Plus } from 'lucide-react';
@@ -72,6 +71,8 @@ export default function ProjectSwitch() {
   }, [user]);
 
   useEffect(() => {
+    if (!user) return;
+
     (async () => {
       const { projects } = await Api.Domain.Project.Index.myProjects();
       setProjects(projects);
@@ -79,7 +80,7 @@ export default function ProjectSwitch() {
         setCurrentProject(projects[0]);
       }
     })();
-  }, [currentProject]);
+  }, [user, currentProject]);
 
   if (isApi || !currentProject) return <ProjectSwitchSkeleton />;
 
@@ -184,7 +185,7 @@ export default function ProjectSwitch() {
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
-            {invitedProjects.length > 0 && <DropdownMenuSeparator />}
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               className="gap-2 p-2"
               onClick={() =>
@@ -192,16 +193,6 @@ export default function ProjectSwitch() {
                   onCreate: (project: Project) => {
                     setProjects((prev) => [...prev, project]);
                     setCurrentProject(project);
-                    setTimeout(() => {
-                      open<InviteProjectProps>('project:invite', {
-                        project: project,
-                        onUpdate: (project: Project) => {
-                          setProjects((prev) =>
-                            prev.map((p) => (p.id === project.id ? project : p)),
-                          );
-                        },
-                      });
-                    }, 100);
                   },
                 })
               }

@@ -19,7 +19,7 @@ export default class Request {
 
     const response = await this.get<UserResponse>('/auth/me');
 
-    if (response === null) {
+    if (!response) {
       this.removeToken();
     } else {
       useUserStore.getState().setUser(response.user);

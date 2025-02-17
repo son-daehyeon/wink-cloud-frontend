@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, Suspense, useEffect } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import {
   Sidebar,
@@ -36,7 +36,10 @@ interface RootLayoutProps {
 }
 export default function RootLayout({ children }: RootLayoutProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams =
+    typeof window === 'undefined'
+      ? new URLSearchParams()
+      : new URL(window.location.href).searchParams;
 
   const { initialize } = useTokenStore();
   const { project } = useProjectStore();
@@ -55,7 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         );
       }
     });
-  }, []);
+  }, [searchParams.get('token')]);
 
   return (
     <html lang="ko" suppressHydrationWarning>
@@ -105,7 +108,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <SidebarInset>
               <NavBreadcrumb />
               <main className="min-h-[calc(100dvh-56px)] overflow-y-auto p-4 pt-0 md:p-6 md:pt-0">
-                {isApi || !project ? <Loader /> : children}
+                <Suspense>
+                  {isApi || (!searchParams.has('token') && !project) ? <Loader /> : children}
+                </Suspense>
               </main>
             </SidebarInset>
           </SidebarProvider>

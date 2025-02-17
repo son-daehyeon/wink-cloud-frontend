@@ -48,6 +48,7 @@ export default function GeneralSetting() {
     startApi(
       async () => {
         await Api.Domain.Project.Index.deleteProject(project.id);
+        setProject(null);
       },
       {
         loading: '프로젝트를 삭제하고 있습니다.',
@@ -70,34 +71,33 @@ export default function GeneralSetting() {
       <CardHeader>
         <CardTitle>일반 설정</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div className="flex gap-2">
-          <Popover open={iconSelectOpen} onOpenChange={setIconSelectOpen}>
-            <PopoverTrigger asChild>
-              <div className="flex size-18 items-center justify-center rounded-sm border cursor-pointer hover:bg-accent">
-                <DynamicIcon name={icon as IconName} className="size-8 shrink-0" />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-[307px]">
-              <IconSelector
-                onSelect={(icon) => {
-                  setIcon(icon);
-                  setIconSelectOpen(false);
-                }}
-              />
-            </PopoverContent>
-          </Popover>
-          <div className="w-full flex flex-col gap-2">
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
-            <div className="flex space-x-2 self-end">
-              <Button variant="destructive" disabled={isApi} onClick={() => onDelete(project)}>
-                삭제
-              </Button>
-              <Button disabled={isApi} onClick={() => onSave(project, { icon, name })}>
-                저장
-              </Button>
+      <CardContent className="flex flex-col items-center gap-4">
+        <Popover open={iconSelectOpen} onOpenChange={setIconSelectOpen}>
+          <PopoverTrigger asChild>
+            <div className="flex size-18 items-center justify-center rounded-sm border cursor-pointer hover:bg-accent">
+              <DynamicIcon name={icon as IconName} className="size-8 shrink-0" />
             </div>
-          </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-[307px]">
+            <IconSelector
+              onSelect={(icon) => {
+                setIcon(icon);
+                setIconSelectOpen(false);
+              }}
+            />
+          </PopoverContent>
+        </Popover>
+        <Input value={name} onChange={(e) => setName(e.target.value)} className="max-w-[300px]" />
+        <div className="flex space-x-2">
+          <Button variant="destructive" disabled={isApi} onClick={() => onDelete(project)}>
+            삭제
+          </Button>
+          <Button
+            disabled={isApi || (name === project.name && icon === project.icon)}
+            onClick={() => onSave(project, { icon, name })}
+          >
+            저장
+          </Button>
         </div>
       </CardContent>
     </Card>

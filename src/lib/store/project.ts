@@ -8,7 +8,7 @@ interface Type {
 }
 
 interface Action {
-  setProject: (project: Project) => void;
+  setProject: (project: Project | null) => void;
 }
 
 const initialState: Type = {
@@ -19,7 +19,7 @@ export const useProjectStore = create(
   persist<Type & Action>(
     (set) => ({
       ...initialState,
-      setProject: (project: Project) => set({ project }),
+      setProject: (project: Project | null) => set({ project }),
     }),
     {
       name: 'project',

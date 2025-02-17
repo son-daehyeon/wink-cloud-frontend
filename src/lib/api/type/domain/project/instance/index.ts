@@ -1,4 +1,4 @@
-import Instance from '@/lib/api/schema/project/instance';
+import Instance from '@/lib/api/type/schema/project/instance';
 
 import { z } from 'zod';
 
