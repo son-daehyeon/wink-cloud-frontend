@@ -19,7 +19,7 @@ import NavBreadcrumb from '@/components/header/nav-breadcrumb';
 import NavMain from '@/components/header/nav-main';
 import NavOther from '@/components/header/nav-other';
 import NavUser from '@/components/header/nav-user';
-import TeamSwitcher from '@/components/header/team-switcher';
+import ProjectSwitch from '@/components/header/project-switch';
 import Loader from '@/components/loader';
 import ModalManager from '@/components/modal-manager';
 import ThemeProvider from '@/components/theme-provider';
@@ -29,6 +29,8 @@ import { useApi } from '@/hooks/use-api';
 import { useTokenStore } from '@/lib/store/token';
 
 import '@/style/global.css';
+
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -58,37 +60,39 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider>
-            <Sidebar>
-              <SidebarHeader>
-                <TeamSwitcher />
-              </SidebarHeader>
-              <SidebarContent>
-                <NavMain />
-                <NavOther />
-              </SidebarContent>
-              <SidebarFooter>
-                <NavUser />
-              </SidebarFooter>
-              <SidebarRail />
-            </Sidebar>
-            <SidebarInset>
-              <NavBreadcrumb />
-              <main className="min-h-[calc(100dvh-56px)] overflow-y-auto px-4 pt-2 pb-4 md:px-8 md:pt-4 md:pb-6">
-                {isApi ? <Loader /> : children}
-              </main>
-            </SidebarInset>
-          </SidebarProvider>
+        <NuqsAdapter>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider>
+              <Sidebar>
+                <SidebarHeader>
+                  <ProjectSwitch />
+                </SidebarHeader>
+                <SidebarContent>
+                  <NavMain />
+                  <NavOther />
+                </SidebarContent>
+                <SidebarFooter>
+                  <NavUser />
+                </SidebarFooter>
+                <SidebarRail />
+              </Sidebar>
+              <SidebarInset>
+                <NavBreadcrumb />
+                <main className="min-h-[calc(100dvh-56px)] overflow-y-auto px-4 pt-2 pb-4 md:px-8 md:pt-4 md:pb-6">
+                  {isApi ? <Loader /> : children}
+                </main>
+              </SidebarInset>
+            </SidebarProvider>
 
-          <ModalManager />
-          <Toaster richColors closeButton />
-        </ThemeProvider>
+            <ModalManager />
+            <Toaster richColors closeButton />
+          </ThemeProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

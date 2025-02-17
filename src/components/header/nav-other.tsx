@@ -22,6 +22,7 @@ const projects = [
 
 export default function NavOther() {
   const { open } = useModalStore();
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>기타</SidebarGroupLabel>

@@ -24,6 +24,14 @@ export default class Project {
     return this.request.post(`/project/${projectId}/invite/${userId}`);
   }
 
+  public async acceptInvite(projectId: string): Promise<ProjectResponse> {
+    return this.request.post(`/project/${projectId}/invite/accept`);
+  }
+
+  public async declineInvite(projectId: string): Promise<ProjectResponse> {
+    return this.request.post(`/project/${projectId}/invite/decline`);
+  }
+
   public async updateProject(
     projectId: string,
     data: CreateProjectRequest,

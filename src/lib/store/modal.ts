@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Modal = 'setting:theme';
+type Modal = 'setting:theme' | 'project:invited' | 'project:new';
 
 interface Type<T = unknown> {
   modal: Modal | null;
@@ -20,5 +20,5 @@ const initialState: Type = {
 export const useModalStore = create<Type & Action>((set) => ({
   ...initialState,
   open: (modal, props) => set({ modal, props }),
-  close: () => set({ ...initialState }),
+  close: () => set({ modal: null }),
 }));

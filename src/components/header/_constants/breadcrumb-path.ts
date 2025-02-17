@@ -6,11 +6,11 @@ type BreadcrumbNode = {
 
 const BreadcrumbPath: Record<string, BreadcrumbNode> = {
   '/': {
-    label: 'WINK Cloud',
+    label: 'WINK 클라우드',
     href: '/',
     children: {
-      callback: { label: '로그인', href: '/callback' },
-      dashboard: {
+      callback: { label: '로그인', href: 'callback' },
+      application: {
         label: '애플리케이션',
         href: '/application',
       },
