@@ -40,7 +40,7 @@ export default function ProjectSwitch() {
   const { open } = useModalStore();
   const { project: currentProject, setProject: setCurrentProject } = useProjectStore();
 
-  const [isApi, startApi] = useApi();
+  const [, startApi] = useApi();
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [invitedProjects, setInvitedProjects] = useState<Project[]>([]);
@@ -82,7 +82,7 @@ export default function ProjectSwitch() {
     })();
   }, [user, currentProject]);
 
-  if (isApi || !currentProject) return <ProjectSwitchSkeleton />;
+  if (!currentProject) return <ProjectSwitchSkeleton />;
 
   return (
     <SidebarMenu>

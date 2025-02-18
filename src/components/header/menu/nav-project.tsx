@@ -9,6 +9,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
+
+import { useProjectStore } from '@/lib/store/project';
 
 import { Settings2, TerminalSquare } from 'lucide-react';
 
@@ -20,6 +23,10 @@ const items = [
 export default function NavProject() {
   const router = useRouter();
 
+  const { project } = useProjectStore();
+
+  if (!project) return <NavProjectSkeleton />;
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>프로젝트</SidebarGroupLabel>
@@ -29,6 +36,24 @@ export default function NavProject() {
             <SidebarMenuButton onClick={() => router.push(item.url)}>
               <item.icon />
               <span>{item.title}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        ))}
+      </SidebarMenu>
+    </SidebarGroup>
+  );
+}
+
+function NavProjectSkeleton() {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>프로젝트</SidebarGroupLabel>
+      <SidebarMenu>
+        {Array.from({ length: items.length }).map((_, idx) => (
+          <SidebarMenuItem key={idx}>
+            <SidebarMenuButton>
+              <Skeleton className="size-5" />
+              <Skeleton className="w-12 h-3.5" />
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
