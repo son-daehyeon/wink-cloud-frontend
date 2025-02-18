@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import {
   SidebarGroup,
@@ -21,8 +21,6 @@ const items = [
 ];
 
 export default function NavProject() {
-  const router = useRouter();
-
   const { project } = useProjectStore();
 
   if (!project) return <NavProjectSkeleton />;
@@ -33,10 +31,12 @@ export default function NavProject() {
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton onClick={() => router.push(item.url)}>
-              <item.icon />
-              <span>{item.title}</span>
-            </SidebarMenuButton>
+            <Link href={item.url}>
+              <SidebarMenuButton>
+                <item.icon />
+                <span>{item.title}</span>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
         ))}
       </SidebarMenu>

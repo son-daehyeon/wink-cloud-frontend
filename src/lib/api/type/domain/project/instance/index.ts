@@ -4,6 +4,15 @@ import { z } from 'zod';
 
 export enum OsType {
   UBUNTU_24_04 = 'UBUNTU_24_04',
+  UBUNTU_22_04 = 'UBUNTU_22_04',
+  DEBIAN_12 = 'DEBIAN_12',
+  DEBIAN_11 = 'DEBIAN_11',
+  CENTOS_10 = 'CENTOS_10',
+  CENTOS_9 = 'CENTOS_9',
+  ROCKY_LINUX_9_5 = 'ROCKY_LINUX_9_5',
+  ROCKY_LINUX_8_10 = 'ROCKY_LINUX_8_10',
+  ALMA_LINUX_9_5 = 'ALMA_LINUX_9_5',
+  ALMA_LINUX_8_10 = 'ALMA_LINUX_8_10',
 }
 
 // ####################################################################################################
@@ -12,16 +21,10 @@ export const CreateInstanceRequestSchema = z.object({
   name: z.string().min(1, '이름은 비어있을 수 없습니다.'),
   publicKey: z.string().min(1, '공개 키는 비어있을 수 없습니다.'),
   osType: z.nativeEnum(OsType),
-  core: z
-    .number()
-    .int()
-    .positive()
-    .min(1, '코어는 1 이상이어야 합니다.')
-    .max(4, '코어는 4 이하여야 합니다.'),
+  core: z.number().int().min(1, '코어는 1 이상이어야 합니다.').max(4, '코어는 4 이하여야 합니다.'),
   memory: z
     .number()
     .int()
-    .positive()
     .min(512, '메모리는 512MB 이상이어야 합니다.')
     .max(4096, '메모리는 4096MB 이하여야 합니다.'),
   swap: z
@@ -32,7 +35,6 @@ export const CreateInstanceRequestSchema = z.object({
   disk: z
     .number()
     .int()
-    .positive()
     .min(8, '디스크는 8GB 이상이어야 합니다.')
     .max(128, '디스크는 128GB 이하여야 합니다.'),
 });
