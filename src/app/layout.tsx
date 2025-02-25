@@ -31,6 +31,8 @@ import { useTokenStore } from '@/lib/store/token';
 
 import '@/style/global.css';
 
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+
 interface RootLayoutProps {
   children: ReactNode;
 }
@@ -54,7 +56,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
       if (!isInitialized) {
         router.replace(
-          `${process.env.NEXT_PUBLIC_WINK_HOSTNAME}/application/${process.env.NEXT_PUBLIC_WINK_APPLICATION_ID}/oauth?callback=${encodeURIComponent(process.env.NEXT_PUBLIC_WINK_CALLBACK_URL!)}`,
+          `https://wink.kookmin.ac.kr/application/${process.env.NEXT_PUBLIC_WINK_APPLICATION_ID}/oauth?callback=${encodeURIComponent(process.env.NEXT_PUBLIC_WINK_CALLBACK_URL!)}`,
         );
       }
     });
@@ -108,9 +110,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <SidebarInset>
               <NavBreadcrumb />
               <main className="min-h-[calc(100dvh-56px)] overflow-y-auto p-4 pt-0 md:p-6 md:pt-0">
-                <Suspense>
-                  {isApi || (!searchParams.has('token') && !project) ? <Loader /> : children}
-                </Suspense>
+                <NuqsAdapter>
+                  <Suspense>
+                    {isApi || (!searchParams.has('token') && !project) ? <Loader /> : children}
+                  </Suspense>
+                </NuqsAdapter>
               </main>
             </SidebarInset>
           </SidebarProvider>

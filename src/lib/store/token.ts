@@ -10,6 +10,7 @@ interface Type {
 }
 
 interface Action {
+  save: (response: LoginResponse) => void;
   login: (response: LoginResponse) => Promise<boolean>;
   logout: () => void;
   initialize: () => Promise<boolean>;
@@ -24,6 +25,7 @@ export const useTokenStore = create(
   persist<Type & Action>(
     (set, get) => ({
       ...initialState,
+      save: ({ accessToken, refreshToken }: LoginResponse) => set({ accessToken, refreshToken }),
       login: ({ accessToken, refreshToken }: LoginResponse) => {
         set({ accessToken, refreshToken });
         return get().initialize();
@@ -32,7 +34,7 @@ export const useTokenStore = create(
         set({ ...initialState });
         Api.Request.removeToken();
         window.location.replace(
-          `${process.env.NEXT_PUBLIC_WINK_HOSTNAME}/application/${process.env.NEXT_PUBLIC_WINK_APPLICATION_ID}/oauth?callback=${encodeURIComponent(process.env.NEXT_PUBLIC_WINK_CALLBACK_URL!)}`,
+          `https://wink.kookmin.ac.kr/application/${process.env.NEXT_PUBLIC_WINK_APPLICATION_ID}/oauth?callback=${encodeURIComponent(process.env.NEXT_PUBLIC_WINK_CALLBACK_URL!)}`,
         );
       },
       initialize: async () => {

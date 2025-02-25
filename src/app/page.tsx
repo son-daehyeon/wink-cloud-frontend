@@ -1,5 +1,20 @@
+'use client';
+
+import { useEffect } from 'react';
+
 import { redirect } from 'next/navigation';
 
+import Loader from '@/components/loader';
+
+import { useUserStore } from '@/lib/store/user';
+
 export default function Page() {
-  redirect('/instance');
+  const { user } = useUserStore();
+
+  useEffect(() => {
+    if (!user) return;
+    redirect('/instance');
+  }, [user]);
+
+  return <Loader />;
 }

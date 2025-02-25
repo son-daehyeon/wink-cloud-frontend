@@ -1,6 +1,7 @@
 import ApiResponse from '@/lib/api/type/api-response';
 import { LoginResponse } from '@/lib/api/type/domain/auth';
 import { UserResponse } from '@/lib/api/type/domain/user';
+import { useTokenStore } from '@/lib/store/token';
 import { useUserStore } from '@/lib/store/user';
 
 export default class Request {
@@ -23,6 +24,7 @@ export default class Request {
       this.removeToken();
     } else {
       useUserStore.getState().setUser(response.user);
+      useTokenStore.getState().save({ accessToken, refreshToken });
       return true;
     }
 
@@ -34,6 +36,7 @@ export default class Request {
     this.refreshToken = null;
 
     useUserStore.getState().setUser(null);
+    useTokenStore.getState().logout();
   }
 
   private async refresh(token: string): Promise<boolean> {
@@ -63,8 +66,6 @@ export default class Request {
 
     if (response.error === '액세스 토큰이 만료되었습니다.') {
       const token = this.refreshToken!;
-
-      this.removeToken();
 
       if (!(await this.refresh(token))) return null as T;
 

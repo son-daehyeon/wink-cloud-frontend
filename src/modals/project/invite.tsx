@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

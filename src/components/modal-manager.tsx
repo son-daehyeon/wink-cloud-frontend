@@ -19,7 +19,7 @@ export default function ModalManager() {
     }
 
     (async () => {
-      const Component = dynamic(() => import(`@/modals/${modal.replace(':', '/')}.tsx`), {
+      const Component = dynamic(() => import(`@/modals/${modal.replaceAll(':', '/')}.tsx`), {
         loading: () => (
           <>
             <DialogHeader>

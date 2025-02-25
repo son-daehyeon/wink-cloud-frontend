@@ -10,19 +10,23 @@ export enum TimeUnit {
 
 export interface InstanceMatrix {
   time: string;
-  maxcpu: number;
-  cpu: number;
-  maxmem: number;
-  mem: number;
-  maxdisk: number;
-  disk: number;
-  diskread: number;
-  diskwrite: number;
-  netin: number;
-  netout: number;
+  maxCpu: number;
+  currentCpu: number;
+  maxMemory: number;
+  currentMemory: number;
+  maxDisk: number;
+  currentDisk: number;
+  diskInput: number;
+  diskOutput: number;
+  networkInput: number;
+  networkOutput: number;
 }
 
 // ####################################################################################################
+
+export interface InstanceCurrentMatrixResponse {
+  matrix: InstanceMatrix;
+}
 
 export interface InstanceMatrixResponse {
   matrix: InstanceMatrix[];

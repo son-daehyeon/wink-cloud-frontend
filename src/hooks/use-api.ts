@@ -17,9 +17,14 @@ export function useApi(): [
 
   async function start(func: () => Promise<unknown>) {
     setPending(true);
-    func()
-      .catch((e) => toast.error(e.message))
-      .finally(() => setPending(false));
+
+    try {
+      await func();
+    } catch (e) {
+      throw e;
+    } finally {
+      setPending(false);
+    }
   }
 
   return [isPending, start, setPending];
@@ -34,13 +39,19 @@ export function useApiWithToast(): [
 
   async function start(func: () => Promise<unknown>, data: PromiseData) {
     setPending(true);
-    toast
-      .promise(func, {
-        error: (e) => e.message,
-        ...data,
-      })
-      .unwrap()
-      .finally(() => setPending(false));
+
+    try {
+      await toast
+        .promise(func, {
+          error: (e) => e.message,
+          ...data,
+        })
+        .unwrap();
+    } catch (e) {
+      throw e;
+    } finally {
+      setPending(false);
+    }
   }
 
   return [isPending, start, setPending];

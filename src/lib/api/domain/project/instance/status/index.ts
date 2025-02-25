@@ -22,8 +22,4 @@ export default class InstanceStatus {
   public async stop(projectId: string, instanceId: string): Promise<void> {
     return this.request.post(`/project/${projectId}/instance/${instanceId}/status/stop`);
   }
-
-  public async restart(projectId: string, instanceId: string): Promise<void> {
-    return this.request.post(`/project/${projectId}/instance/${instanceId}/status/restart`);
-  }
 }

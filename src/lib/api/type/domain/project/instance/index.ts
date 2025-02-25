@@ -3,16 +3,15 @@ import Instance from '@/lib/api/type/schema/project/instance';
 import { z } from 'zod';
 
 export enum OsType {
+  UBUNTU_24_10 = 'UBUNTU_24_10',
   UBUNTU_24_04 = 'UBUNTU_24_04',
   UBUNTU_22_04 = 'UBUNTU_22_04',
+  UBUNTU_20_04 = 'UBUNTU_20_04',
   DEBIAN_12 = 'DEBIAN_12',
   DEBIAN_11 = 'DEBIAN_11',
-  CENTOS_10 = 'CENTOS_10',
   CENTOS_9 = 'CENTOS_9',
-  ROCKY_LINUX_9_5 = 'ROCKY_LINUX_9_5',
-  ROCKY_LINUX_8_10 = 'ROCKY_LINUX_8_10',
-  ALMA_LINUX_9_5 = 'ALMA_LINUX_9_5',
-  ALMA_LINUX_8_10 = 'ALMA_LINUX_8_10',
+  ROCKY_LINUX_9 = 'ROCKY_LINUX_9',
+  ALMA_LINUX_9 = 'ALMA_LINUX_9',
 }
 
 // ####################################################################################################
