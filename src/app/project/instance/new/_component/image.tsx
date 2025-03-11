@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
-import { ImageType, images } from '@/app/instance/new/_constant/image';
+import { ImageType, images } from '@/app/project/instance/new/_constant/image';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';

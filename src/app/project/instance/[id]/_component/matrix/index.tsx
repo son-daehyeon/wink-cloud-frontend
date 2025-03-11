@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import MatrixChart from '@/app/instance/[id]/_component/matrix/matrix-chart';
-import { matrixInfos } from '@/app/instance/[id]/_constant/matrix-info';
+import MatrixChart from '@/app/project/instance/[id]/_component/matrix/matrix-chart';
+import { matrixInfos } from '@/app/project/instance/[id]/_constant/matrix-info';
 
 import {
   Select,

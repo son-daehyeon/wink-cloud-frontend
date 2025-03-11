@@ -13,7 +13,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!user) return;
-    redirect('/instance');
+    redirect('/project');
   }, [user]);
 
   return <Loader />;

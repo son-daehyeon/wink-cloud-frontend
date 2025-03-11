@@ -3,6 +3,7 @@ import Project from '@/lib/api/domain/project';
 import Instance from '@/lib/api/domain/project/instance';
 import InstanceMatrix from '@/lib/api/domain/project/instance/matrix';
 import InstanceStatus from '@/lib/api/domain/project/instance/status';
+import Record from '@/lib/api/domain/record';
 import User from '@/lib/api/domain/user';
 import KeyPair from '@/lib/api/domain/util/key_pair';
 import Request from '@/lib/api/request';
@@ -23,6 +24,7 @@ export default class Api {
         Status: new InstanceStatus(this.request),
       },
     },
+    Record: new Record(this.request),
     Util: {
       KeyPair: new KeyPair(this.request),
     },

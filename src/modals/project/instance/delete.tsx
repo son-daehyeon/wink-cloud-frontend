@@ -28,7 +28,7 @@ export default function InstanceDeleteModal(props: InstanceDeleteProps) {
     startApi(
       async () => {
         await Api.Domain.Project.Instance.Index.deleteInstance(project!.id, instance.id);
-        router.replace('/instance');
+        router.replace('/project/instance');
       },
       {
         loading: '인스턴스를 삭제하고 있습니다',

@@ -17,6 +17,7 @@ import { Toaster } from '@/components/ui/sonner';
 
 import NavOther from '@/components/header/menu/nav-other';
 import NavProject from '@/components/header/menu/nav-project';
+import NavRecord from '@/components/header/menu/nav-record';
 import NavBreadcrumb from '@/components/header/nav-breadcrumb';
 import NavUser from '@/components/header/nav-user';
 import ProjectSwitch from '@/components/header/project-switch';
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </SidebarHeader>
               <SidebarContent>
                 <NavProject />
+                <NavRecord />
                 <NavOther />
               </SidebarContent>
               <SidebarFooter>

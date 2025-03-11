@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
-import GeneralSetting from '@/app/instance/[id]/edit/_component/general';
-import PerformanceSetting from '@/app/instance/[id]/edit/_component/performance';
+import GeneralSetting from '@/app/project/instance/[id]/edit/_component/general';
+import PerformanceSetting from '@/app/project/instance/[id]/edit/_component/performance';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -61,7 +61,7 @@ export default function Page({ params }: PageProps) {
             instance.id,
             values,
           );
-          router.push(`/instance/${_instance.id}`);
+          router.push(`/project/instance/${_instance.id}`);
         },
         {
           loading: '인스턴스를 수정하고 있습니다.',
@@ -81,7 +81,7 @@ export default function Page({ params }: PageProps) {
 
       const instance = instances.find((instance) => instance.id === id);
 
-      if (!instance) router.replace('/instance');
+      if (!instance) router.replace('/project/instance');
 
       setInstance(instance);
     });

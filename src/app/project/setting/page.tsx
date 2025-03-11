@@ -1,5 +1,5 @@
-import GeneralSetting from '@/app/setting/_component/general';
-import MemberSetting from '@/app/setting/_component/member';
+import GeneralSetting from '@/app/project/setting/_component/general';
+import MemberSetting from '@/app/project/setting/_component/member';
 
 export default function Page() {
   return (

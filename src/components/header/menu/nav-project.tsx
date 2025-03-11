@@ -16,8 +16,8 @@ import { useProjectStore } from '@/lib/store/project';
 import { Settings2, TerminalSquare } from 'lucide-react';
 
 const items = [
-  { title: '인스턴스', icon: TerminalSquare, url: '/instance' },
-  { title: '설정', icon: Settings2, url: '/setting' },
+  { title: '인스턴스', icon: TerminalSquare, url: '/project/instance' },
+  { title: '설정', icon: Settings2, url: '/project/setting' },
 ];
 
 export default function NavProject() {

@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
-import GeneralSetting from '@/app/instance/new/_component/general';
-import ImageSetting from '@/app/instance/new/_component/image';
-import PerformanceSetting from '@/app/instance/new/_component/performance';
-import SshKeySetting from '@/app/instance/new/_component/ssh-key';
+import GeneralSetting from '@/app/project/instance/new/_component/general';
+import ImageSetting from '@/app/project/instance/new/_component/image';
+import PerformanceSetting from '@/app/project/instance/new/_component/performance';
+import SshKeySetting from '@/app/project/instance/new/_component/ssh-key';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -57,7 +57,7 @@ export default function Page() {
             project.id,
             values,
           );
-          router.push(`/instance/${instance.id}`);
+          router.push(`/project/instance/${instance.id}`);
         },
         {
           loading: '인스턴스를 생성하고 있습니다.',

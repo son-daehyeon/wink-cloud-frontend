@@ -2,6 +2,8 @@ import { create } from 'zustand';
 
 type Modal =
   | 'setting:theme'
+  | 'record:create'
+  | 'record:update'
   | 'project:invited'
   | 'project:new'
   | 'project:invite'

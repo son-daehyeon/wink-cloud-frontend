@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import Matrix from '@/app/instance/[id]/_component/matrix';
-import Status from '@/app/instance/[id]/_component/status';
+import Matrix from '@/app/project/instance/[id]/_component/matrix';
+import Status from '@/app/project/instance/[id]/_component/status';
 
 import { Button } from '@/components/ui/button';
 
@@ -43,7 +43,7 @@ export default function Page({ params }: PageProps) {
 
       const instance = instances.find((instance) => instance.id === id);
 
-      if (!instance) router.replace('/instance');
+      if (!instance) router.replace('/project/instance');
 
       setInstance(instance);
     });
@@ -59,7 +59,7 @@ export default function Page({ params }: PageProps) {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => router.push(`/instance/${instance.id}/edit`)}
+            onClick={() => router.push(`/project/instance/${instance.id}/edit`)}
           >
             수정
           </Button>

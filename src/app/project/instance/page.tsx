@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { formatMemory } from '@/app/instance/new/_util/format';
+import { formatMemory } from '@/app/project/instance/new/_util/format';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -49,7 +49,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Link href="/instance/new" className="self-end">
+      <Link href="/project/instance/new" className="self-end">
         <Button size="lg">새 인스턴스 생성</Button>
       </Link>
 
@@ -61,7 +61,7 @@ export default function Page() {
             <TableHead>생성일</TableHead>
             <TableHead className="hidden lg:table-cell">코어</TableHead>
             <TableHead className="hidden lg:table-cell">메모리</TableHead>
-            <TableHead className="hidden lg:table-cell">스왑</TableHead>
+            <TableHead className="hidden lg:table-cell">스왑 메모리</TableHead>
             <TableHead className="hidden lg:table-cell">디스크</TableHead>
             <TableHead className="hidden lg:table-cell">IP</TableHead>
           </TableRow>
@@ -72,7 +72,7 @@ export default function Page() {
               <TableRow
                 key={instance.id}
                 className="h-14 cursor-pointer"
-                onClick={() => router.push(`/instance/${instance.id}`)}
+                onClick={() => router.push(`/project/instance/${instance.id}`)}
               >
                 <TableCell>{instance.name}</TableCell>
                 <TableCell className="hidden xl:table-cell">{instance.id}</TableCell>

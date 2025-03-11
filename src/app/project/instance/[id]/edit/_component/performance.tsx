@@ -1,6 +1,6 @@
 import { UseFormReturn } from 'react-hook-form';
 
-import { formatMemory } from '@/app/instance/new/_util/format';
+import { formatMemory } from '@/app/project/instance/new/_util/format';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
