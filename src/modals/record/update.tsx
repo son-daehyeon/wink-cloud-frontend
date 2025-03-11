@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -50,7 +50,7 @@ export default function RecordUpdateModal({ record, onUpdate, onDelete }: Record
   const form = useForm<UpdateRecordRequest>({
     resolver: zodResolver(UpdateRecordRequestSchema),
     defaultValues: {
-      type: RRType.A,
+      type: undefined,
       ttl: 300,
       records: [],
     },
@@ -89,6 +89,14 @@ export default function RecordUpdateModal({ record, onUpdate, onDelete }: Record
 
   const type = form.watch('type');
 
+  useEffect(() => {
+    if (!record) return;
+
+    form.setValue('type', record.type);
+    form.setValue('ttl', record.ttl);
+    form.setValue('records', record.record);
+  }, [record]);
+
   return (
     <>
       <DialogHeader>
@@ -121,7 +129,11 @@ export default function RecordUpdateModal({ record, onUpdate, onDelete }: Record
               <FormItem>
                 <FormLabel>레코드 종류</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} value={field.value as string}>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={record.type}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue />
@@ -183,7 +195,7 @@ export default function RecordUpdateModal({ record, onUpdate, onDelete }: Record
             <Button variant="destructive" onClick={() => onDeleteRecord(record)} disabled={isApi}>
               레코드 삭제
             </Button>
-            <Button disabled={isApi}>레코드 추가</Button>
+            <Button disabled={isApi}>레코드 변경</Button>
           </div>
         </form>
       </Form>
