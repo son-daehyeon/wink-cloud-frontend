@@ -36,7 +36,6 @@ export default class Request {
     this.refreshToken = null;
 
     useUserStore.getState().setUser(null);
-    useTokenStore.getState().logout();
   }
 
   private async refresh(token: string): Promise<boolean> {
