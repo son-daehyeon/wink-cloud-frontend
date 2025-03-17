@@ -69,18 +69,6 @@ export default function ProjectSwitch() {
     });
   }, [user]);
 
-  useEffect(() => {
-    if (!user) return;
-
-    (async () => {
-      const { projects } = await Api.Domain.Project.Index.myProjects();
-      setProjects(projects);
-      if (!currentProject || !projects.find((project) => project.id === currentProject.id)) {
-        setCurrentProject(projects[0]);
-      }
-    })();
-  }, [user, currentProject]);
-
   if (!currentProject) return <ProjectSwitchSkeleton />;
 
   return (
