@@ -123,7 +123,7 @@ export default function InviteProjectModal({ project, onUpdate }: InviteProjectP
                       >
                         <Avatar className="h-8 w-8 rounded-lg">
                           <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback className="rounded-lg">{user.name}</AvatarFallback>
+                          <AvatarFallback className="rounded-lg">{user.name.at(0)}</AvatarFallback>
                         </Avatar>
                         {user.name}
                         <Check

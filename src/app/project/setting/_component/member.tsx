@@ -58,7 +58,7 @@ export default function MemberSetting() {
                 <div className="flex items-center space-x-4">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>{user.name}</AvatarFallback>
+                    <AvatarFallback>{user.name.at(0)}</AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="text-sm font-medium leading-none">{user.name}</p>
@@ -100,7 +100,7 @@ export default function MemberSetting() {
                 <div className="flex items-center space-x-4">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>{user.name}</AvatarFallback>
+                    <AvatarFallback>{user.name.at(0)}</AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="text-sm font-medium leading-none">{user.name}</p>

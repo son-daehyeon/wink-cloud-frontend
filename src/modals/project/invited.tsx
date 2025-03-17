@@ -81,7 +81,7 @@ export default function ProjectInvitedModal({ project, onAccept, onDecline }: Pr
             <div key={user.id} className="flex items-center space-x-2">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">{user.name}</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{user.name.at(0)}</AvatarFallback>
               </Avatar>
               <p>{user.name}</p>
             </div>
