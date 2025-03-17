@@ -74,3 +74,25 @@ export function getFormat(type: RRType) {
   if (type === RRType.NAPTR)
     return '[order] [preference] [flags] [services] [regexp] [replacement]';
 }
+
+export function getRegex(type: RRType) {
+  if (type === RRType.A)
+    return /^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$/;
+  if (type === RRType.AAAA) return /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+  if (type === RRType.CNAME || type === RRType.NS || type === RRType.PTR)
+    return /^(?!-)[A-Za-z0-9.-]{1,253}(?<!-)$/;
+  if (type === RRType.MX) return /^(\d{1,5})\s+(?!-)[A-Za-z0-9.-]{1,253}(?<!-)$/;
+  if (type === RRType.TXT) return /^.{1,255}$/;
+  if (type === RRType.SRV)
+    return /^(\d{1,5})\s+(\d{1,5})\s+(\d{1,5})\s+(?!-)[A-Za-z0-9.-]{1,253}(?<!-)$/;
+  if (type === RRType.SPF) return /^v=spf1\s+.*$/;
+  if (type === RRType.NAPTR)
+    return /^(\d{1,5})\s+(\d{1,5})\s+"[sS]?"\s+"[A-Za-z0-9+]+"\s+".*"\s+(?!-)[A-Za-z0-9.-]{1,253}(?<!-)$/;
+  if (type === RRType.CAA) return /^(\d)\s+([A-Za-z]+)\s+"[^"]+"$/;
+  if (type === RRType.DS) return /^(\d{1,5})\s+(\d{1,3})\s+(\d{1,3})\s+[A-Fa-f0-9]+$/;
+  if (type === RRType.TLSA) return /^(\d)\s+(\d)\s+(\d)\s+[A-Fa-f0-9]+$/;
+  if (type === RRType.SSHFP) return /^(\d)\s+(\d)\s+[A-Fa-f0-9]+$/;
+  if (type === RRType.HTTPS || type === RRType.SVCB) return /^(\d{1,5})\s+[A-Za-z0-9.-]+(\s+.*)?$/;
+
+  return /.*/;
+}
