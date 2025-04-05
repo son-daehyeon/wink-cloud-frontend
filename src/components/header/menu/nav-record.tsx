@@ -12,12 +12,12 @@ import {
 
 import { Rss } from 'lucide-react';
 
-const items = [{ title: 'wink.io.kr', icon: Rss, url: '/record' }];
+const items = [{ title: 'wink.io.kr', icon: Rss, url: '/dns' }];
 
 export default function NavRecord() {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>레코드</SidebarGroupLabel>
+      <SidebarGroupLabel>DNS</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>

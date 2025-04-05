@@ -1,5 +1,4 @@
 import ApiResponse from '@/lib/api/type/api-response';
-import { LoginResponse } from '@/lib/api/type/domain/auth';
 import { UserResponse } from '@/lib/api/type/domain/user';
 import { useTokenStore } from '@/lib/store/token';
 import { useUserStore } from '@/lib/store/user';
@@ -7,16 +6,14 @@ import { useUserStore } from '@/lib/store/user';
 export default class Request {
   private readonly baseUrl?: string;
 
-  private accessToken: string | null = null;
-  private refreshToken: string | null = null;
+  private token: string | null = null;
 
   public constructor() {
     this.baseUrl = typeof window === 'undefined' ? process.env.API_URL : window.origin;
   }
 
-  public async setToken(accessToken: string, refreshToken: string): Promise<boolean> {
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
+  public async setToken(token: string): Promise<boolean> {
+    this.token = token;
 
     const response = await this.get<UserResponse>('/auth/me');
 
@@ -24,7 +21,7 @@ export default class Request {
       this.removeToken();
     } else {
       useUserStore.getState().setUser(response.user);
-      useTokenStore.getState().save({ accessToken, refreshToken });
+      useTokenStore.getState().save({ token });
       return true;
     }
 
@@ -32,28 +29,9 @@ export default class Request {
   }
 
   public removeToken() {
-    this.accessToken = null;
-    this.refreshToken = null;
+    this.token = null;
 
     useUserStore.getState().setUser(null);
-  }
-
-  private async refresh(token: string): Promise<boolean> {
-    try {
-      const { accessToken, refreshToken } = await this.post<LoginResponse>('/auth/refresh-token', {
-        token,
-      });
-
-      await this.setToken(accessToken, refreshToken);
-
-      return true;
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
-      this.removeToken();
-
-      return false;
-    }
   }
 
   // ############################################################
@@ -64,20 +42,6 @@ export default class Request {
     ).json();
 
     if (response.error === '액세스 토큰이 만료되었습니다.') {
-      const token = this.refreshToken!;
-
-      if (!(await this.refresh(token))) return null as T;
-
-      const headers = options.headers as Headers;
-      headers.set('Authorization', `Bearer ${this.accessToken}`);
-
-      return this.request(url, {
-        ...options,
-        headers,
-      });
-    }
-
-    if (url === '/auth/me' && response.error === '인증에 실패하였습니다.') {
       this.removeToken();
       return null as T;
     }
@@ -149,8 +113,8 @@ export default class Request {
     headers.set('Accept', 'application/json');
     headers.set('Content-Type', 'application/json');
 
-    if (this.accessToken) {
-      headers.set('Authorization', `Bearer ${this.accessToken}`);
+    if (this.token) {
+      headers.set('Authorization', `Bearer ${this.token}`);
     }
 
     if (body && body instanceof FormData) {

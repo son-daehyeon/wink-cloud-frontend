@@ -5,8 +5,7 @@ import { create } from 'zustand/index';
 import { persist } from 'zustand/middleware';
 
 interface Type {
-  accessToken: string | null;
-  refreshToken: string | null;
+  token: string | null;
 }
 
 interface Action {
@@ -17,17 +16,16 @@ interface Action {
 }
 
 const initialState: Type = {
-  accessToken: null,
-  refreshToken: null,
+  token: null,
 };
 
 export const useTokenStore = create(
   persist<Type & Action>(
     (set, get) => ({
       ...initialState,
-      save: ({ accessToken, refreshToken }: LoginResponse) => set({ accessToken, refreshToken }),
-      login: ({ accessToken, refreshToken }: LoginResponse) => {
-        set({ accessToken, refreshToken });
+      save: ({ token }: LoginResponse) => set({ token }),
+      login: ({ token }: LoginResponse) => {
+        set({ token });
         return get().initialize();
       },
       logout: () => {
@@ -38,9 +36,9 @@ export const useTokenStore = create(
         );
       },
       initialize: async () => {
-        const { accessToken, refreshToken } = get();
-        if (!accessToken || !refreshToken) return false;
-        return Api.Request.setToken(accessToken, refreshToken);
+        const { token } = get();
+        if (!token) return false;
+        return Api.Request.setToken(token);
       },
     }),
     {

@@ -1,11 +1,5 @@
 import Auth from '@/lib/api/domain/auth';
-import Project from '@/lib/api/domain/project';
-import Instance from '@/lib/api/domain/project/instance';
-import InstanceMatrix from '@/lib/api/domain/project/instance/matrix';
-import InstanceStatus from '@/lib/api/domain/project/instance/status';
 import Record from '@/lib/api/domain/record';
-import User from '@/lib/api/domain/user';
-import KeyPair from '@/lib/api/domain/util/key_pair';
 import Request from '@/lib/api/request';
 
 export default class Api {
@@ -14,20 +8,8 @@ export default class Api {
   private readonly request = new Request();
 
   private readonly domain = {
-    User: new User(this.request),
     Auth: new Auth(this.request),
-    Project: {
-      Index: new Project(this.request),
-      Instance: {
-        Index: new Instance(this.request),
-        Matrix: new InstanceMatrix(this.request),
-        Status: new InstanceStatus(this.request),
-      },
-    },
     Record: new Record(this.request),
-    Util: {
-      KeyPair: new KeyPair(this.request),
-    },
   };
 
   private constructor() {

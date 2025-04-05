@@ -6,21 +6,22 @@ type BreadcrumbNode = {
 
 const BreadcrumbPath: Record<string, BreadcrumbNode> = {
   '/': {
-    label: 'WINK 클라우드',
+    label: 'WINK DNS',
     href: '/',
     children: {
-      callback: { label: '로그인', href: 'callback' },
-      project: {
-        label: '프로젝트',
-        href: '/project',
+      oauth: {
+        label: '인증',
+        href: '/oauth',
         children: {
-          instance: { label: '인스턴스', href: '/instance' },
-          setting: { label: '설정', href: '/setting' },
+          callback: {
+            label: '콜백',
+            href: '/callback',
+          },
         },
       },
-      record: {
-        label: '레코드',
-        href: '/record',
+      dns: {
+        label: 'DNS',
+        href: '/dns',
       },
     },
   },

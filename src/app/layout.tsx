@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarInset,
   SidebarProvider,
@@ -16,18 +15,15 @@ import {
 import { Toaster } from '@/components/ui/sonner';
 
 import NavOther from '@/components/header/menu/nav-other';
-import NavProject from '@/components/header/menu/nav-project';
 import NavRecord from '@/components/header/menu/nav-record';
 import NavBreadcrumb from '@/components/header/nav-breadcrumb';
 import NavUser from '@/components/header/nav-user';
-import ProjectSwitch from '@/components/header/project-switch';
 import Loader from '@/components/loader';
 import ModalManager from '@/components/modal-manager';
 import ThemeProvider from '@/components/theme-provider';
 
 import { useApi } from '@/hooks/use-api';
 
-import { useProjectStore } from '@/lib/store/project';
 import { useTokenStore } from '@/lib/store/token';
 
 import '@/style/global.css';
@@ -45,7 +41,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       : new URL(window.location.href).searchParams;
 
   const { initialize } = useTokenStore();
-  const { project } = useProjectStore();
 
   const [isApi, startApi] = useApi();
 
@@ -66,14 +61,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
-        <title>WINK 클라우드</title>
-        <meta
-          name="description"
-          content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK 전용 클라우드 서비스"
-        />
+        <title>WINK DNS</title>
+        <meta name="description" content="국민대학교 소프트웨어융합대학 웹 학술 동아리 WINK DNS" />
         <meta
           name="keywords"
-          content="국민대학교, WINK, 웹 개발, 웹 동아리, 국민대 웹 동아리, WINK 클라우드"
+          content="국민대학교, WINK, 웹 개발, 웹 동아리, 국민대 웹 동아리, WINK DNS"
         />
         <meta name="author" content="WINK - Web IN Kookmin" />
         <meta name="robots" content="index,nofollow" />
@@ -97,25 +89,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <SidebarProvider>
             <Sidebar>
               <SidebarHeader>
-                <ProjectSwitch />
+                <NavUser />
               </SidebarHeader>
               <SidebarContent>
-                <NavProject />
                 <NavRecord />
                 <NavOther />
               </SidebarContent>
-              <SidebarFooter>
-                <NavUser />
-              </SidebarFooter>
               <SidebarRail />
             </Sidebar>
             <SidebarInset>
               <NavBreadcrumb />
               <main className="min-h-[calc(100dvh-56px)] overflow-y-auto p-4 pt-0 md:p-6 md:pt-0">
                 <NuqsAdapter>
-                  <Suspense>
-                    {isApi || (!searchParams.has('token') && !project) ? <Loader /> : children}
-                  </Suspense>
+                  <Suspense>{isApi ? <Loader /> : children}</Suspense>
                 </NuqsAdapter>
               </main>
             </SidebarInset>

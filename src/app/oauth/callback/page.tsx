@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import Loader from '@/components/loader';
 
@@ -13,7 +13,7 @@ import { useTokenStore } from '@/lib/store/token';
 
 export default function Page() {
   const router = useRouter();
-  const searchParams = new URL(window.location.href).searchParams;
+  const searchParams = useSearchParams();
 
   const { login } = useTokenStore();
 
